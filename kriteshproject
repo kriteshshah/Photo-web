@@ -1,0 +1,9 @@
+alias.cl=!f() { git clone "$1" && sh /usr/local/bin/git-hooks/single_dir.sh "$1"; }; f
+user.name=kriteshshah
+user.email=kriteshshah201@gmail.com
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=https://github.com/kriteshshah/Photo-web.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
