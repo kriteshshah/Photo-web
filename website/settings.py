@@ -22,7 +22,9 @@ SECRET_KEY = 'django-insecure-1=zd0d^_(otiv6=k3wajcsaoxu5wz_p&^ji7)k(x)p8l(w6h5#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://photoread.netlify.app/', 'photoread.netlify.app']
+ALLOWED_HOSTS = []
+
+# ALLOWED_HOSTS = ['https://photoread.netlify.app/', 'photoread.netlify.app']
 
 # Application definition
 
