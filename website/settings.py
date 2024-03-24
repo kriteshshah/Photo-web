@@ -22,7 +22,7 @@ SECRET_KEY = 'django-insecure-1=zd0d^_(otiv6=k3wajcsaoxu5wz_p&^ji7)k(x)p8l(w6h5#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['main--photoread.netlify.app', 'https://main--photoread.netlify.app/']
 
 # Application definition
 
@@ -142,3 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+DEBUG = False
+ALLOWED_HOSTS = ['your-domain.com', 'www.your-domain.com']
