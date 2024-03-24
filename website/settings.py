@@ -142,7 +142,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-
-DEBUG = False
-ALLOWED_HOSTS = ['your-domain.com', 'www.your-domain.com']
