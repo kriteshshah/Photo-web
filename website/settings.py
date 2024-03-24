@@ -6,6 +6,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
 from pathlib import Path
 
 from django.urls.conf import path
@@ -22,9 +23,9 @@ SECRET_KEY = 'django-insecure-1=zd0d^_(otiv6=k3wajcsaoxu5wz_p&^ji7)k(x)p8l(w6h5#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
-# ALLOWED_HOSTS = ['https://photoread.netlify.app/', 'photoread.netlify.app']
+ALLOWED_HOSTS = ['https://photoread.netlify.app/']
 
 # Application definition
 
@@ -137,6 +138,7 @@ SIGNUP_REDIRECT_URL = 'web:list'
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
