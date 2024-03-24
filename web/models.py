@@ -18,5 +18,17 @@ class Photo(models.Model):
 
     tags = TaggableManager()
 
+    likes_count = models.PositiveIntegerField(default=0)
+    dislikes_count = models.PositiveIntegerField(default=0)
+
     def __str__(self):
         return self.title
+
+
+class Like(models.Model):
+    photo = models.ForeignKey(Photo, related_name='likes', on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), related_name='liked_photos', on_delete=models.CASCADE)
+    like = models.BooleanField(default=True)  # True for like, False for dislike
+
+    class Meta:
+        unique_together = ['photo', 'user']

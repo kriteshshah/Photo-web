@@ -8,7 +8,7 @@ from .views import (
     PhotoDetailView,
     PhotoCreateView,
     PhotoUpdateView,
-    PhotoDeleteView
+    PhotoDeleteView, ToggleLikeView
 )
 
 app_name = 'web'
@@ -20,9 +20,12 @@ urlpatterns = [
 
     path('web/<int:pk>/', PhotoDetailView.as_view(), name='detail'),
 
-    path('web/create/',  PhotoCreateView.as_view(), name='create'),
+    path('web/create/', PhotoCreateView.as_view(), name='create'),
 
     path('web/<int:pk>/update/', PhotoUpdateView.as_view(), name='update'),
 
     path('web/<int:pk>/delete/', PhotoDeleteView.as_view(), name='delete'),
+
+    path('toggle_like/<int:pk>/', ToggleLikeView.as_view(), name='toggle_like'),
+
 ]
