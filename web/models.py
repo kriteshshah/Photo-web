@@ -28,7 +28,8 @@ class Photo(models.Model):
 class Like(models.Model):
     photo = models.ForeignKey(Photo, related_name='likes', on_delete=models.CASCADE)
     user = models.ForeignKey(get_user_model(), related_name='liked_photos', on_delete=models.CASCADE)
-    like = models.BooleanField(default=True)  # True for like, False for dislike
+    like = models.BooleanField(default=False)  # True for like, False for dislike
+    dislike = models.BooleanField(default=False)  # True for dislike, False for like
 
     class Meta:
         unique_together = ['photo', 'user']

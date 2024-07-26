@@ -25,7 +25,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = ['https://photoread.netlify.app/']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -88,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sql1',
         'USER': 'postgres',
-        'PASSWORD': 'Kri1902001',
+        'PASSWORD': 'Test105*',
         'HOST': 'localhost',
         'PORT': '5432',
     }

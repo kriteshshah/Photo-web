@@ -29,61 +29,37 @@
 
   <div id="like-buttons" class="text-center">
     {% if user.is_authenticated %}
-      <button id="like-button" data-status="{{ like_status }}" class="btn btn-primary mx-2">
-        {% if like_status == True %}Unlike{% else %}Like{% endif %}
-      </button>
-      <span id="like-count">{{ like_count }}</span>
-      <button id="dislike-button" data-status="{{ like_status }}" class="btn btn-danger mx-2">
-        {% if like_status == False %}Undislike{% else %}Dislike{% endif %}
-      </button>
-      <span id="dislike-count">{{ dislike_count }}</span>
+      <form id="like-form" action="{% url 'web:toggle_like' photo.pk %}" method="post">
+        {% csrf_token %}
+        <button type="button" id="like-button-{{ photo.pk }}" data-status="{{ like_status }}" class="btn btn-primary mx-2" data-url="{% url 'web:toggle_like' photo.pk %}" data-action="like">Like</button>
+        <span id="like-count">{{ like_count }}</span>
+        <button type="button" class="btn btn-secondary mx-2" data-url="{% url 'web:toggle_like' photo.pk %}" data-action="dislike">Dislike</button>
+        <span id="dislike-count">{{ dislike_count }}</span>
+      </form>
     {% endif %}
   </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const likeButton = document.getElementById('like-button');
-  const dislikeButton = document.getElementById('dislike-button');
-  const likeCount = document.getElementById('like-count');
-  const dislikeCount = document.getElementById('dislike-count');
+$(document).ready(function () {
+    $('#like-buttons').on('click', 'button', function () {
+        var button = $(this);
+        var url = button.data('url');
+        var action = button.data('action');
 
-  likeButton.addEventListener('click', function() {
-    toggleLike('like');
-  });
-
-  dislikeButton.addEventListener('click', function() {
-    toggleLike('dislike');
-  });
-
-  function toggleLike(status) {
-    const photoId = {{ photo.id }};
-    fetch(`/toggle_like/${photoId}/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': '{{ csrf_token }}'
-      },
-      body: JSON.stringify({ like_status: status })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success') {
-        // Update like and dislike counts
-        likeCount.textContent = data.like_count;
-        dislikeCount.textContent = data.dislike_count;
-
-        // Update like status text
-        if (status === 'like') {
-          likeButton.dataset.status = data.new_status;
-          likeButton.textContent = data.new_status ? 'Unlike' : 'Like';
-        } else {
-          dislikeButton.dataset.status = data.new_status;
-          dislikeButton.textContent = data.new_status ? 'Undislike' : 'Dislike';
-        }
-      }
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                [action]: true
+            },
+            success: function (data) {
+                $('#like-count').text(data.like_count);
+                $('#dislike-count').text(data.dislike_count);
+            }
+        });
     });
-  }
 });
 </script>
 

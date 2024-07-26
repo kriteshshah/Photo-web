@@ -61,41 +61,42 @@ class ToggleLikeView(View):
     def post(self, request, pk):
         if request.user.is_authenticated:
             photo = get_object_or_404(Photo, pk=pk)
-            like_status = request.POST.get('like_status')
+            user = request.user
 
-            # Get or create Like object
-            like_obj, created = Like.objects.get_or_create(photo=photo, user=request.user)
+            like_instance, created = Like.objects.get_or_create(photo=photo, user=user)
 
-            if like_status == 'like':
-                like_obj.like = not like_obj.like  # Toggle like status
-                like_obj.save()
+            if 'like' in request.POST:
+                if like_instance.like:
+                    like_instance.like = False
+                    if photo.likes_count != 0:
+                        photo.likes_count -= 1
+                else:
+                    if like_instance.dislike:
+                        like_instance.dislike = False
+                        if photo.dislikes_count != 0:
+                            photo.dislikes_count -= 1
+                    like_instance.like = True
+                    photo.likes_count += 1
 
-                # Update like and dislike counts
-                like_count = photo.likes.filter(like=True).count()
-                dislike_count = photo.likes.filter(like=False).count()
+            elif 'dislike' in request.POST:
+                if like_instance.dislike:
+                    like_instance.dislike = False
+                    if photo.dislikes_count != 0:
+                        photo.dislikes_count -= 1
+                else:
+                    if like_instance.like:
+                        like_instance.like = False
+                        if photo.likes_count != 0:
+                            photo.likes_count -= 1
+                    like_instance.dislike = True
+                    photo.dislikes_count += 1
 
-                return JsonResponse({
-                    'status': 'success',
-                    'new_status': like_obj.like,
-                    'like_count': like_count,
-                    'dislike_count': dislike_count
-                })
-            elif like_status == 'dislike':
-                like_obj.like = not like_obj.like  # Toggle dislike status
-                like_obj.save()
+            like_instance.save()
+            photo.save()
 
-                # Update like and dislike counts
-                like_count = photo.likes.filter(like=True).count()
-                dislike_count = photo.likes.filter(like=False).count()
+            return JsonResponse({'like_count': photo.likes_count, 'dislike_count': photo.dislikes_count})
+        return JsonResponse({'error': 'You must be logged in to like or dislike'}, status=401)
 
-                return JsonResponse({
-                    'status': 'success',
-                    'new_status': like_obj.like,
-                    'like_count': like_count,
-                    'dislike_count': dislike_count
-                })
-
-        return JsonResponse({'status': 'error'})
 
 class PhotoCreateView(LoginRequiredMixin, CreateView):
     model = Photo
