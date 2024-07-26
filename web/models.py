@@ -3,12 +3,13 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 from taggit.managers import TaggableManager
+from tinymce.models import HTMLField
 
 
 class Photo(models.Model):
     title = models.CharField(max_length=45)
 
-    description = models.TextField()
+    description = HTMLField()  # Use TinyMCE for rich text editing
 
     created = models.DateTimeField(auto_now_add=True)
 

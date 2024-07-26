@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.urls import reverse_lazy, reverse
 
+from .forms import PhotoForm
 from .models import Photo, Like
 
 
@@ -101,7 +102,7 @@ class ToggleLikeView(View):
 class PhotoCreateView(LoginRequiredMixin, CreateView):
     model = Photo
 
-    fields = ['title', 'description', 'image', 'tags']
+    form_class = PhotoForm
 
     template_name = 'create.html'
     success_url = reverse_lazy('web:list')
