@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h2>Photos Like and Unlike List</h2>
+<div class="row">
+  {% for photo_like in like_list %}
+  <div class="col-lg-3 col-md-4 col-xs-6">
+    <a href="{% url 'web:detail' photo_like.photo.id %}" class="d-block mb-4 h-100" style="text-decoration: none">
+      <img src="{{ photo_like.photo.image.url }}" class="img-fluid rounded" alt="{{ photo_like.photo.title }}" />
+      <p style="color:black">{{ photo_like.photo.title }}</p>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock body %}

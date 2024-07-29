@@ -19,18 +19,26 @@
     >
       <ul class="navbar-nav">
         {% if user.is_authenticated %}
-
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'web:like_list' %}">like</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link active" href="{% url 'web:create' %}">Add a photo</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active"  href="{% url 'account:logout' %}">Hi {{user.username}}</a>
+       <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Hi {{ user.username }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{% url 'account:profile' user.pk %}">Update Profile</a>
+                <a class="dropdown-item" href="{% url 'account:logout' %}">Logout</a>
+            </div>
         </li>
         {% else %}
 
         <li class="nav-item">
-          <a href="users/login" class="btn btn-sm btn-danger"
-            >Sign In</a
+          <a href="{% url 'account:signup' %}" class="btn btn-sm btn-danger"
+            >Sign up</a
           >
         </li>
         {% endif %}

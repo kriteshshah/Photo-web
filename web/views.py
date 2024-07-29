@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
@@ -146,3 +147,14 @@ class PhotoDeleteView(UserIsSubmitter, DeleteView):
     model = Photo
 
     success_url = reverse_lazy('web:list')
+
+
+class LikeAndDislikePhotoList(LoginRequiredMixin, ListView):
+    model = Like
+    template_name = 'like_dislike_list.html'
+    context_object_name = 'like_list'
+
+    def get_queryset(self):
+        return Like.objects.filter(Q(like=True) | Q(dislike=True), user=self.request.user).select_related('photo')
+
+
