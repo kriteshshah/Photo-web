@@ -47,7 +47,7 @@ class CustomLogout(View):
 
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect(reverse('account:login'))
+        return HttpResponseRedirect(reverse('my_account:login'))
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):

@@ -41,11 +41,24 @@ INSTALLED_APPS = [
     'taggit',
     'crispy_forms',
     'crispy_bootstrap4',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     # Custom apps
     'web',
-    'account',
+    'my_account',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -58,6 +71,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Add this line
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'website.urls'
@@ -128,9 +143,9 @@ USE_TZ = True
 TAGGIT_CASE_INSENSITIVE = True
 
 # Django Authentication
-SIGNUP_URL = 'account:login'
-LOGIN_URL = 'account:login'
-# LOGOUT_URL = 'account:logout'
+SIGNUP_URL = 'my_account:login'
+LOGIN_URL = 'my_account:login'
+# LOGOUT_URL = 'my_account:logout'
 LOGIN_REDIRECT_URL = 'web:list'
 SIGNUP_REDIRECT_URL = 'web:list'
 # LOGOUT_REDIRECT_URL = 'web:list'

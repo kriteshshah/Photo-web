@@ -8,7 +8,7 @@ from .views import (
     PhotoDetailView,
     PhotoCreateView,
     PhotoUpdateView,
-    PhotoDeleteView, ToggleLikeView, LikeAndDislikePhotoList
+    PhotoDeleteView, ToggleLikeView, LikePhotoList, DislikePhotoList, SelfUploadPhotoList
 )
 
 app_name = 'web'
@@ -27,6 +27,8 @@ urlpatterns = [
     path('web/<int:pk>/delete/', PhotoDeleteView.as_view(), name='delete'),
 
     path('toggle_like/<int:pk>/', ToggleLikeView.as_view(), name='toggle_like'),
-    path('unlike/like/list', LikeAndDislikePhotoList.as_view(), name='like_list'),
+    path('unlike/like/list', LikePhotoList.as_view(), name='like_list'),
+    path('unlike/dislike/list', DislikePhotoList.as_view(), name='dislike_list'),
+    path('unlike/self/upload/list', SelfUploadPhotoList.as_view(), name='upload_list'),
 
 ]

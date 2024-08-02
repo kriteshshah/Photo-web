@@ -31,9 +31,13 @@
     {% if user.is_authenticated %}
       <form id="like-form" action="{% url 'web:toggle_like' photo.pk %}" method="post">
         {% csrf_token %}
-        <button type="button" id="like-button-{{ photo.pk }}" data-status="{{ like_status }}" class="btn btn-primary mx-2" data-url="{% url 'web:toggle_like' photo.pk %}" data-action="like">Like</button>
+        <button type="button" id="like-button-{{ photo.pk }}" data-status="{{ like_status }}" class="btn btn-primary mx-2" data-url="{% url 'web:toggle_like' photo.pk %}" data-action="like">
+          <i class="fas fa-thumbs-up"></i>
+        </button>
         <span id="like-count">{{ like_count }}</span>
-        <button type="button" class="btn btn-secondary mx-2" data-url="{% url 'web:toggle_like' photo.pk %}" data-action="dislike">Dislike</button>
+        <button type="button" class="btn btn-secondary mx-2" data-url="{% url 'web:toggle_like' photo.pk %}" data-action="dislike">
+          <i class="fas fa-thumbs-down"></i>
+        </button>
         <span id="dislike-count">{{ dislike_count }}</span>
       </form>
     {% endif %}

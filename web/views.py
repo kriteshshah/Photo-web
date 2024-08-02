@@ -23,7 +23,7 @@ class PhotoListView(ListView):
     context_object_name = 'photos'
 
 
-class PhotoTagListView(PhotoListView):
+class PhotoTagListView(LoginRequiredMixin, PhotoListView):
     template_name = 'taglist.html'
 
     # Custom function
@@ -39,7 +39,7 @@ class PhotoTagListView(PhotoListView):
         return context
 
 
-class PhotoDetailView(DetailView):
+class PhotoDetailView(LoginRequiredMixin, DetailView):
     model = Photo
     template_name = 'detail.html'
     context_object_name = 'photo'
@@ -114,7 +114,7 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def myview(self, request):
-        return HttpResponseRedirect('account:login', request)
+        return HttpResponseRedirect('my_account:login', request)
 
 
 class UserIsSubmitter(UserPassesTestMixin):
@@ -149,12 +149,31 @@ class PhotoDeleteView(UserIsSubmitter, DeleteView):
     success_url = reverse_lazy('web:list')
 
 
-class LikeAndDislikePhotoList(LoginRequiredMixin, ListView):
+class LikePhotoList(LoginRequiredMixin, ListView):
     model = Like
     template_name = 'like_dislike_list.html'
     context_object_name = 'like_list'
 
     def get_queryset(self):
-        return Like.objects.filter(Q(like=True) | Q(dislike=True), user=self.request.user).select_related('photo')
+        return Like.objects.filter(like=True, user=self.request.user).select_related('photo')
+
+
+class DislikePhotoList(LoginRequiredMixin, ListView):
+    model = Like
+    template_name = 'like_dislike_list.html'
+    context_object_name = 'like_list'
+
+    def get_queryset(self):
+        return Like.objects.filter(dislike=True, user=self.request.user).select_related('photo')
+
+
+class SelfUploadPhotoList(LoginRequiredMixin, ListView):
+    model = Photo
+    template_name = 'list.html'
+    context_object_name = 'photos'
+
+    def get_queryset(self):
+        return Photo.objects.filter(submitter=self.request.user)
+
 
 
