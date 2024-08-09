@@ -102,15 +102,12 @@ class ToggleLikeView(View):
 
 class PhotoCreateView(LoginRequiredMixin, CreateView):
     model = Photo
-
     form_class = PhotoForm
-
     template_name = 'create.html'
     success_url = reverse_lazy('web:list')
 
     def form_valid(self, form):
         form.instance.submitter = self.request.user
-
         return super().form_valid(form)
 
     def myview(self, request):
@@ -133,11 +130,8 @@ class UserIsSubmitter(UserPassesTestMixin):
 
 class PhotoUpdateView(UserIsSubmitter, UpdateView):
     template_name = 'update.html'
-
     model = Photo
-
-    fields = ['title', 'description', 'image', 'tags']
-
+    form_class = PhotoForm
     success_url = reverse_lazy('web:list')
 
 

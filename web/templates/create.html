@@ -1,9 +1,26 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
+
+{% block head %}
+<script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    height: 360,
+    width: 700,
+    plugins: 'save link image media preview codesample table code lists fullscreen insertdatetime searchreplace wordcount visualblocks visualchars autolink lists charmap print anchor pagebreak',
+    toolbar1: 'fullscreen preview bold italic underline | fontselect fontsizeselect | forecolor backcolor | alignleft alignright aligncenter alignjustify | indent outdent | bullist numlist table | link image media | codesample',
+    toolbar2: 'visualblocks visualchars | charmap hr pagebreak anchor | code',
+    menubar: true,
+    statusbar: true,
+  });
+</script>
+{% endblock head %}
 
 {% block body %}
 <div class="mx-auto">
-  <h1 class="mt-3 text-center">Add photo</h1>
+  <h1 class="mt-3 text-center">Add Photo</h1>
 </div>
 <div class="form-group">
   <form action="" method="post" enctype="multipart/form-data">
@@ -11,6 +28,5 @@
     {{ form|crispy }}
     <button type="submit" class="btn btn-success mb-3">Add Photo</button>
   </form>
-
 </div>
 {% endblock body %}
